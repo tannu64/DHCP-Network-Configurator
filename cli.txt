@@ -1,0 +1,30 @@
+enable
+configure terminal
+hostname dhcp-server
+int f0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+exit
+
+int f0/1
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+exit
+
+ip dhcp excluded-address 192.168.1.1
+ip dhcp excluded-address 192.168.2.1
+
+ip dhcp pool NETWORK1
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.1
+dns-server 8.8.8.8
+exit
+
+ip dhcp pool NETWORK2
+network 192.168.2.0 255.255.255.0
+default-router 192.168.2.1
+dns-server 8.8.8.8
+exit
+
+end
+write memory
